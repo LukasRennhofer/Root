@@ -2,9 +2,6 @@
                    The kernel knows. The compiler obeys. The bloat dies.                                                                                                    
 */
 
-
-
-
 // The no-bloat single-header Build System for C/C++
 // Root is still under construction and the source code can change at any time!
 // Use at your own risk!
@@ -175,7 +172,7 @@ static inline void root_scan_directory(const char* dir, void (*file_handler)(con
     }
 
     while ((entry = readdir(dp))) {
-        if (entry->d_type == DT_REG) {  // If it's a regular file
+        if (entry->d_type == DT_REG) {
             file_handler(entry->d_name);
         }
     }
@@ -189,12 +186,9 @@ static inline void root_gather_sources(void) {
 
 // Link object files into a final executable
 static inline void root_link_executable(const char* output_name) {
-    // Link the object files and generate the final executable
     char command[1024] = {0};
     snprintf(command, sizeof(command), "%s *.o -o %s", ROOT_COMPILER_CXX, output_name);
 
-    // Add any necessary linker flags here (like linking external libraries)
-    // Example: -lm for math library or -lssl for SSL library
     snprintf(command + strlen(command), sizeof(command) - strlen(command), " -lm");
 
     if (ROOT_OUTPUT_DEBUG) {
